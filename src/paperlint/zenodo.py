@@ -51,10 +51,15 @@ def run_zenodo(args: Any, report: Report) -> None:
         if created:
             age = (date.today() - datetime.strptime(created, "%Y-%m-%d").date()).days
 
+        # the API returns the licence either as a string or as {"id": ...}
+        licence = metadata.get("license")
+        if isinstance(licence, dict):
+            licence = licence.get("id") or licence.get("title")
+
         report.check(f"record {record} reachable", True, "concept" if is_concept else "version")
         report.note(
             f"{record}: concept={concept} version={metadata.get('version')} "
-            f"license={metadata.get('license')} access={metadata.get('access_right')} "
+            f"license={licence} access={metadata.get('access_right')} "
             f"anonymous_files={len(files)} created={created} age={age}d"
         )
 
