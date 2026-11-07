@@ -1,0 +1,48 @@
+# Example paperlint config for a journal submission package.
+#
+# Run with:  paperlint manuscript package --config examples/paperlint.toml
+#
+# Relative paths resolve against `base`. Every key below is optional; the
+# command-line flags append to the lists defined here.
+
+[package]
+base = "./shared/submissions/example-journal"
+
+# Recorded state: {"paper/source/paper.tex": "a1b2c3d4"} — full digests or
+# 8-character prefixes both work.
+sha_json = "expects.json"
+
+# Page counts must match exactly; a 15-page limit that silently became 17 is one
+# of the things reviewers reject on.
+pages = [
+  "paper/manuscript/paper.pdf=15",
+]
+
+# Sources scanned by the stale and voice checks.
+tex = ["paper/source/paper.tex"]
+
+# Strings that should not survive an edit.
+stale = [
+  "failed: NaN",
+  "not yet quantified",
+]
+
+# Words a single-author venue forbids.
+voice = ["we", "our"]
+
+docx = ["paper/manuscript/paper.docx"]
+min_media = 9
+
+# REL.pdf:MIN — minimum number of embedded images.
+pdf_figs = ["paper/manuscript/paper.pdf:9"]
+
+highlights = "paper/highlights.txt"
+max_highlight_chars = 85
+kwexpect = 7
+
+# Cover letter: flattened PDF plus tokens that must appear in it.
+cover_pdf = "paper/cover-letter.pdf"
+cover_tokens = ["19 September 2026"]
+
+# Work trees that must be clean before anything is submitted.
+git = ["."]
