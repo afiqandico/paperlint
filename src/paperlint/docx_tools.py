@@ -31,7 +31,7 @@ CELL_PT = 10
 
 def _docx():
     try:
-        import docx  # noqa: F401
+        import docx
     except ImportError as exc:  # pragma: no cover - depends on extras
         raise RuntimeError(
             "python-docx is required: pip install 'paperlint[docx]'"
@@ -69,7 +69,7 @@ def dump(path: Path, max_paragraphs: int = 10**9) -> None:
             continue
         fmt = paragraph.paragraph_format
         print(
-            f"  {index:3d} | {paragraph.style.name:18s} | {str(paragraph.alignment):8s} | "
+            f"  {index:3d} | {paragraph.style.name:18s} | {paragraph.alignment!s:8s} | "
             f"first={_fmt(fmt.first_line_indent):7s} | "
             f"before={_fmt(fmt.space_before):6s} | after={_fmt(fmt.space_after):6s} | "
             f"blanks_before={blanks:2d} | {text[:40]}"
@@ -265,7 +265,7 @@ def run_restyle(args: Any, report: Report) -> None:
         return
     try:
         apply_style(path)
-    except Exception as exc:  # noqa: BLE001 - surface any failure as a FAIL row
+    except Exception as exc:
         report.fail("restyle applied", f"{type(exc).__name__}: {exc}")
         return
     report.check("restyle applied", True, path.name)

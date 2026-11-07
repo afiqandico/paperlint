@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .report import Report
-from .shell import out, run
+from .shell import out
 
 
 def _load_yaml():
@@ -73,7 +73,7 @@ def run_ci(args: Any, report: Report) -> None:
         base = workflow.name
         try:
             data = yaml.safe_load(workflow.read_text(encoding="utf-8")) or {}
-        except Exception as exc:  # noqa: BLE001 - malformed YAML never runs
+        except Exception as exc:
             report.fail(f"{base} parses", str(exc).splitlines()[0][:80])
             continue
 

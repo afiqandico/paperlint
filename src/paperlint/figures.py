@@ -33,7 +33,7 @@ from typing import Any
 
 from .report import Report
 
-SAVEFIG_RX = re.compile(r"^(fig\.savefig\(.*|plt\.close\(.*)$", re.M)
+SAVEFIG_RX = re.compile(r"^(fig\.savefig\(.*|plt\.close\(.*)$", re.MULTILINE)
 FIGURE_NAMES = ("fig", "figure", "f")
 
 
@@ -58,7 +58,7 @@ def load_figure(source: str) -> tuple[Any, Any]:
     _deps()
     namespace: dict[str, Any] = {"__name__": "paperlint_layout_gate"}
     code = SAVEFIG_RX.sub("pass", source)
-    exec(compile(code, "<figure-script>", "exec"), namespace)  # noqa: S102
+    exec(compile(code, "<figure-script>", "exec"), namespace)
     for name in FIGURE_NAMES:
         if name in namespace and hasattr(namespace[name], "axes"):
             figure = namespace[name]
@@ -128,7 +128,7 @@ def run(args: Any, report: Report) -> None:
 
     try:
         figure, axis = load_figure(script.read_text(encoding="utf-8", errors="replace"))
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         report.fail("plot script yields a measurable figure", f"{type(exc).__name__}: {exc}")
         return
 

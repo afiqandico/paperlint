@@ -126,8 +126,8 @@ def run(args: Any, report: Report) -> None:
     total = sum(len(v) for v in unresolved.values())
     detail = f"{total} token(s) in {len(unresolved)} file(s)" if total else "0"
     if total:
-        first = sorted(unresolved.items())[0]
-        detail += f"; e.g. {Path(first[0]).name}: {', '.join(sorted(set(first[1]))[:3])}"
+        rel, tokens = min(unresolved.items())
+        detail += f"; e.g. {Path(rel).name}: {', '.join(sorted(set(tokens))[:3])}"
     report.check("no dangling path references", total == 0, detail)
 
     for name, _ in rules:

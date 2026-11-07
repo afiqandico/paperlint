@@ -66,7 +66,7 @@ CITE_RX = re.compile(r"\\cite[a-zA-Z]*\{([^}]+)\}")
 BIBITEM_RX = re.compile(r"\\bibitem\{([^}]+)\}")
 BIBLIOGRAPHY_RX = re.compile(r"\\(?:bibliography|printbibliography)\b")
 KEYWORDS_RX = re.compile(
-    r"\\begin\{IEEEkeywords\}(.*?)\\end\{IEEEkeywords\}", re.S
+    r"\\begin\{IEEEkeywords\}(.*?)\\end\{IEEEkeywords\}", re.DOTALL
 )
 IMAGE_ROW_RX = re.compile(r"^\s*\d+\s")
 
@@ -109,7 +109,7 @@ def resolve_config(args: Any) -> dict[str, Any]:
 
     for key in LIST_KEYS:
         cli = getattr(args, key, None) or []
-        cfg[key] = list(cfg.get(key) or []) + [v for v in cli]
+        cfg[key] = list(cfg.get(key) or []) + list(cli)
 
     for key in ("base", "sha_json", "highlights", "cover_pdf", "min_media",
                 "kwexpect", "max_highlight_chars"):
@@ -219,7 +219,7 @@ def _check_stale(cfg: dict[str, Any], texts: list[tuple[str, str]], report: Repo
 
 def _check_voice(cfg: dict[str, Any], texts: list[tuple[str, str]], report: Report) -> None:
     for word in cfg["voice"]:
-        rx = re.compile(r"\b" + re.escape(word) + r"\b", re.I)
+        rx = re.compile(r"\b" + re.escape(word) + r"\b", re.IGNORECASE)
         hits = [rel for rel, text in texts if rx.search(text)]
         report.check(
             f'voice "{word}"',

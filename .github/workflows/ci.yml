@@ -7,6 +7,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install ruff
+      - run: ruff check src tests
+
   test:
     name: test (py${{ matrix.python-version }})
     runs-on: ubuntu-latest

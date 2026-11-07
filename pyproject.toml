@@ -37,6 +37,7 @@ figures = ["matplotlib>=3.7", "Pillow>=10"]
 # PyYAML: `repo ci` (without it the YAML checks are skipped, never silently passed)
 ci = ["PyYAML>=6"]
 all = ["python-docx>=1.1", "matplotlib>=3.7", "Pillow>=10", "PyYAML>=6"]
+dev = ["pytest>=8", "ruff>=0.9"]
 
 [project.urls]
 Homepage = "https://github.com/afiqandico/paperlint"
@@ -54,3 +55,9 @@ addopts = "-q"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint]
+# Pinned so CI does not drift when ruff changes its default rule set.
+select = ["E", "F", "W", "I", "B", "C4", "SIM", "RUF", "ISC", "FURB"]
+ignore = ["E501"]
+
