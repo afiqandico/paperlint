@@ -172,6 +172,12 @@ pip install -e '.[all]' pytest
 pytest -q
 ```
 
+## Releasing
+
+See [RELEASING.md](RELEASING.md). Version strings live in `pyproject.toml`,
+`src/paperlint/__init__.py` and `CITATION.cff`; a release that updates only one of
+them contradicts itself.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
