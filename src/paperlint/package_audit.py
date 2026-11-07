@@ -49,7 +49,7 @@ DEFAULTS: dict[str, Any] = {
     "voice": [],
     "docx": [],
     "pdf_figs": [],
-    "min_media": 1,
+    "min_media": 0,
     "highlights": None,
     "max_highlight_chars": 85,
     "kwexpect": 0,
@@ -63,7 +63,7 @@ LIST_KEYS = frozenset(
 )
 
 CITE_RX = re.compile(r"\\cite[a-zA-Z]*\{([^}]+)\}")
-BIBITEM_RX = re.compile(r"\\bibitem\{([^}]+)\}")
+BIBITEM_RX = re.compile(r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}")
 BIBLIOGRAPHY_RX = re.compile(r"\\(?:bibliography|printbibliography)\b")
 KEYWORDS_RX = re.compile(
     r"\\begin\{IEEEkeywords\}(.*?)\\end\{IEEEkeywords\}", re.DOTALL

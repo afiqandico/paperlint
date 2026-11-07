@@ -137,6 +137,20 @@ script you would not run.
 fragments show up as candidate dangling references. Treat the output as findings
 to classify; use `--strict` only when the tree is meant to be link-clean.
 
+**`verify manifest`** auto-detects three shapes: a JSON manifest (`{"artifacts": {...}}`),
+`sha256sum` output (`<digest>  <path>`), and a file holding nothing but the digest
+itself. The last one carries no filename, so it cannot be verified alone — pass
+`--digest-of PATH` to name the artefact it belongs to. `paperlint` refuses to
+guess, because guessing the wrong file turns a green tick into a false one:
+
+```bash
+paperlint verify manifest internal/bundle_sha.txt \
+  --digest-of supplementary/reproducibility_bundle.zip
+```
+
+A manifest that lists its own digest fails: the digest is inside the file whose
+digest it claims to record, so no value can ever satisfy it.
+
 **`verify zenodo`** reads only the public API: no token, no login, no writes.
 
 ## Honest limitations

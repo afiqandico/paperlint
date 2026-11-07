@@ -237,8 +237,14 @@ def build_parser() -> argparse.ArgumentParser:
     vsub = ver.add_subparsers(dest="command", required=True, metavar="COMMAND")
 
     vman = vsub.add_parser("manifest", help="recompute hashes and sizes from a manifest")
-    vman.add_argument("manifest", help="manifest JSON")
+    vman.add_argument("manifest", help="manifest JSON or sha256sum file")
     vman.add_argument("--root", default=".", help="base directory (default: .)")
+    vman.add_argument(
+        "--digest-of",
+        default=None,
+        metavar="PATH",
+        help="the artefact a bare 64-hex file refers to (it carries no filename)",
+    )
     _add_json(vman)
     vman.set_defaults(command="manifest")
 

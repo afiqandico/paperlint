@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "paperlint: deterministic pre-submission gates for manuscripts and research repositories"
+abstract: >
+  A command-line tool that verifies published claims about research artefacts:
+  page counts, recorded hashes and byte sizes, citation/bibliography parity,
+  figure rendering determinism, Word template structure, CI workflow wiring and
+  deposit records. Every check is independent and the exit code is the contract,
+  so the tool can gate a submission pipeline. A run that executes zero checks
+  exits non-zero.
+type: software
+license: MIT
+authors:
+  - family-names: Pangimpian
+    given-names: Afiq Andico
+    email: afiqandico13@gmail.com
+repository-code: "https://github.com/afiqandico/paperlint"
+keywords:
+  - reproducibility
+  - manuscript
+  - peer-review
+  - latex
+  - audit
+  - continuous-integration
+version: 0.1.0
+date-released: "2026-11-07"

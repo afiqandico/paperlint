@@ -1,0 +1,29 @@
+{
+  "title": "paperlint: deterministic pre-submission gates for manuscripts and research repositories",
+  "description": "A command-line tool that verifies published claims about research artefacts: page counts, recorded hashes and byte sizes, citation/bibliography parity, figure rendering determinism, Word template structure, CI workflow wiring and deposit records. Every check is independent and the exit code is the contract. A run that executes zero checks exits non-zero, because a silently skipped audit reads as a pass.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Pangimpian, Afiq Andico",
+      "affiliation": "ITB STIKOM Bali"
+    }
+  ],
+  "keywords": [
+    "reproducibility",
+    "manuscript audit",
+    "pre-submission checks",
+    "latex",
+    "continuous integration",
+    "research software"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/afiqandico/paperlint",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "language": "eng"
+}

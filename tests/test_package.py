@@ -73,6 +73,36 @@ def test_clean_package_passes(tmp_path, run):
     assert "FAIL" not in out
 
 
+def test_docx_without_media_passes_by_default(tmp_path, run):
+    """A declaration DOCX has no images; the image floor must be opt-in."""
+    base = _package(tmp_path)
+    from conftest import make_docx
+
+    make_docx(base / "plain.docx", text="Table 1", media=0)
+    args = _base_args(base)
+    index = args.index("--min-media")
+    del args[index : index + 2]
+    args[args.index("code.docx")] = "plain.docx"
+    code, out = run(*args)
+    assert code == 0, out
+
+
+def test_natbib_bibitems_with_optional_arg_are_parsed(tmp_path, run):
+    """`\\bibitem[Author(2021)]{key}` is a bibliography entry, not a missing one."""
+    base = _package(tmp_path)
+    tex = TEX.replace(
+        r"\bibitem{alpha} A. Author. 2024.", r"\bibitem[Author(2024)]{alpha} A. Author. 2024."
+    ).replace(
+        r"\bibitem{beta} B. Author. 2023.", r"\bibitem[Bee(2023)]{beta} B. Author. 2023."
+    )
+    (base / "paper.tex").write_text(tex)
+    digest = hashlib.sha256((base / "paper.tex").read_bytes()).hexdigest()
+    (base / "expects.json").write_text(json.dumps({"paper.tex": digest[:8]}))
+    code, out = run(*_base_args(base))
+    assert code == 0, out
+    assert "cited 2 bib 2" in out
+
+
 def test_page_count_mismatch_fails(tmp_path, run):
     base = _package(tmp_path)
     args = _base_args(base)
