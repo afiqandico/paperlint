@@ -172,6 +172,22 @@ pip install -e '.[all]' pytest
 pytest -q
 ```
 
+`pytest` also works straight from a checkout without installing anything: the
+package lives under `src/`, and `pyproject.toml` puts `src` on `sys.path` for the
+test run (`[tool.pytest.ini_options] pythonpath`).
+
+Verifying the packaged artefact — the thing a user actually installs:
+
+```bash
+python -m pip wheel . --no-deps -w dist/          # metadata in the wheel is the truth
+python -m venv /tmp/pl && /tmp/pl/bin/pip install dist/paperlint-*.whl
+/tmp/pl/bin/paperlint --version                   # console script wired
+/tmp/pl/bin/python -m paperlint --version          # module entry point too
+```
+
+Both paths must print the same version as `pyproject.toml`, `src/paperlint/__init__.py`
+and `CITATION.cff`.
+
 ## Releasing
 
 See [RELEASING.md](RELEASING.md). Version strings live in `pyproject.toml`,
