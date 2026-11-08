@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,8 @@ version = "0.1.0"
 description = "Deterministic pre-submission gates for manuscripts and research repositories"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "Afiq Andico Pangimpian" }]
 keywords = [
   "research",
@@ -23,7 +24,6 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Environment :: Console",
   "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Topic :: Documentation",
   "Topic :: Scientific/Engineering",
@@ -51,6 +51,9 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# Jalankan `pytest` langsung dari checkout tanpa `pip install -e .`:
+# paket ada di src/ (src-layout), jadi tambahkan ke sys.path lewat konfigurasi.
+pythonpath = ["src"]
 
 [tool.ruff]
 line-length = 100
